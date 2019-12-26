@@ -1,0 +1,70 @@
+body{
+  display: flex;
+  flex-direction: column;
+  font-family:cursive;
+}
+
+header h2{
+  font-size: 64px;
+  font-family: inherit;
+}
+
+.main-container{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-self: center;
+  margin: 24px 0px;
+}
+
+.game-container{
+  display: flex;
+  flex-direction: column;
+  flex: 3;
+}
+
+.buttons{
+  flex: 1;
+}
+
+.gameplay-container{
+  display: flex;
+  flex: 3;
+  flex-direction: column;
+}
+
+.gameplay-row{
+  display: flex;
+  flex: 3;
+  flex-direction: row;
+}
+
+.gameplay-cell{
+  flex: 1;
+  padding-top: 20px;
+  font-family: inherit;
+  text-align: center;
+  background-color: white;
+  font-size: 45px;
+  min-width: 80px;
+  min-height: 80px;
+}
+
+#a1, #a2, #b1, #b2{
+  border-right: 3px solid #3f3f3f;
+  border-bottom: 3px solid #3f3f3f;
+}
+
+#a3, #b3{
+  border-bottom: 3px solid #3f3f3f;
+}
+
+#c1, #c2{
+  border-right: 3px solid #3f3f3f;
+}
+
+
+.winner{
+  flex: 1;
+  border: 3px solid grey;
+}
