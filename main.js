@@ -1,6 +1,6 @@
 
 // Player factory function
-function createPlayer(nameArg){
+function createPlayer(nameArg, sign){
   let name = nameArg;
   let sign = 'O';
   return { name, sign };
@@ -20,18 +20,6 @@ const GameBoard = ( () => {
     '#c2': '',
     '#c3': ''
   };
-
-  // let gameboard = {
-  //   '#a1': 'a1',
-  //   '#a2': 'a2',
-  //   '#a3': 'a3',
-  //   '#b1': 'b1',
-  //   '#b2': 'b2',
-  //   '#b3': 'b3',
-  //   '#c1': 'c1',
-  //   '#c2': 'c2',
-  //   '#c3': 'c3'
-  // };
 
   //populate game board with values in gameboard array
   let populateGameBoard = function(){
@@ -90,12 +78,10 @@ const Gameplay = ( () => {
         return c2;
       }
     }
-
     return false;
-
   }
 
-  const checkWin = function(){
+  const checkForWinner = function(){
     const winningSign = checkWinningSign();
     if(winningSign){
       gameActive = false;
@@ -140,18 +126,17 @@ const Gameplay = ( () => {
     for(let key in gb){
       let cellQuery = document.querySelector(key);
       if( gb.hasOwnProperty(key)){
-        console.log('inside MAM')
         cellQuery.addEventListener('click', (e)=> {
-          if(turn){
-            GameBoard.assignValue(key, 'O')
-            let x = checkWinningSign();
-            if(x)console.log(x, ' WINS');
-            turn = !turn;
-          }else{
-            GameBoard.assignValue(key, 'X')
-            let x = checkWinningSign();
-            if(x)console.log(x, ' WINS');
-            turn = !turn;
+          if(gameActive){
+            if(turn){
+              GameBoard.assignValue(key, 'O')
+              checkForWinner();
+              turn = !turn;
+            }else{
+              GameBoard.assignValue(key, 'X')
+              checkForWinner();
+              turn = !turn;
+            }
           }
         });
       }
