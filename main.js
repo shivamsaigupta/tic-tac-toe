@@ -80,6 +80,11 @@ const Gameplay = ( () => {
         return c2;
       }
     }
+
+    if (gb["#a2"] != '' && gb["#b1"] != '' && gb["#b2"] != '' && gb["#b3"] != '' && gb["#c1"] != '' && gb["#c3"] != ''){
+      return 'TIE';
+    }
+
     return false;
   }
 
@@ -89,15 +94,21 @@ const Gameplay = ( () => {
       gameActive = false;
       if(winningSign === 'O'){
         printWinner(player1.name);
-      }else{
+      }else if(winningSign === 'O'){
         printWinner(player2.name);
+      }else{
+        printWinner('TIE');
       }
     }
   }
 
   const printWinner = function(winnerName){
     const winnerElement = document.querySelector("#winner-text");
-    winnerElement.textContent = `${winnerName} won!`
+    if(winnerName === 'TIE'){
+      winnerElement.textContent = "It's a TIE! 😂";
+      return;
+    }
+    winnerElement.textContent = `${winnerName} won! 😃`
   }
 
   // note: make a different module for display and DOM manipulation
