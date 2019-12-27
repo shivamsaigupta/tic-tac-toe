@@ -20,17 +20,17 @@ header h2{
 .game-container{
   display: flex;
   flex-direction: column;
-  flex: 3;
+  margin-top: 12px;
 }
 
 .buttons{
   flex: 1;
-  margin: 8px 0px;
+  margin: 12px 0px;
 }
 
 .gameplay-container{
   display: flex;
-  flex: 3;
+  margin-top: 12px;
   flex-direction: column;
 }
 
@@ -51,6 +51,12 @@ header h2{
   min-height: 80px;
 }
 
+.winner{
+  flex: 1;
+  margin-top: 12px;
+  text-align: center;
+}
+
 #a1, #a2, #b1, #b2{
   border-right: 3px solid #3f3f3f;
   border-bottom: 3px solid #3f3f3f;
@@ -64,8 +70,7 @@ header h2{
   border-right: 3px solid #3f3f3f;
 }
 
-
-.winner{
-  flex: 1;
-  border: 3px solid grey;
+#winner-text{
+  font-family: inherit;
+  font-size: 32px;
 }
