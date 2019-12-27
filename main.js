@@ -1,8 +1,8 @@
 
 // Player factory function
-function createPlayer(nameArg, sign){
+function createPlayer(nameArg, signArg){
   let name = nameArg;
-  let sign = 'O';
+  let sign = signArg;
   return { name, sign };
 }
 
@@ -98,6 +98,13 @@ const Gameplay = ( () => {
     winnerElement.textContent = `${winnerName} won!`
   }
 
+  // note: make a different module for display and DOM manipulation
+  const hideButtons = function(){
+    let gameContainer = document.querySelector(".game-container");
+    let buttons = document.querySelector(".buttons");
+    gameContainer.removeChild(buttons);
+  }
+
   let applyEventListeners = function(){
     let startBtn = document.querySelector("#startBtn");
     startBtn.addEventListener('click', ()=> initializeGame() );
@@ -110,12 +117,13 @@ const Gameplay = ( () => {
   let changePlayersNames = function(){
     let p1Name = document.querySelector("#plr1").value;
     let p2Name = document.querySelector("#plr2").value;
-    player1.name = p1Name;
-    player2.name = p2Name;
+    if(p1Name != '') player1.name = p1Name;
+    if(p2Name != '') player2.name = p2Name;
   }
   let initializeGame = function(){
     if(!gameActive){
       changePlayersNames();
+      hideButtons();
       gameActive = true;
     }else{
       throw new Error("Game already started.")
