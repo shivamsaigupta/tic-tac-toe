@@ -1,3 +1,5 @@
+// TODO: make it responsive for mobile
+
 
 // Player factory function
 function createPlayer(nameArg, signArg){
