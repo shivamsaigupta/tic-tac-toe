@@ -71,6 +71,7 @@ const Gameplay = ( () => {
 
     if( a3 != '' ){
       if( (a3 === gb["#b3"] && a3 === gb["#c3"]) || (a3 === gb["#b2"] && a3 === gb["#c1"])){
+        console.log('hallo')
         return a3;
       }
     }
@@ -94,9 +95,9 @@ const Gameplay = ( () => {
       gameActive = false;
       if(winningSign === 'O'){
         printWinner(player1.name);
-      }else if(winningSign === 'O'){
+      }else if(winningSign === 'X'){
         printWinner(player2.name);
-      }else{
+      }else if(winningSign === 'TIE'){
         printWinner('TIE');
       }
     }
