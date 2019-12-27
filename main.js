@@ -2,8 +2,8 @@
 // Player factory function
 function createPlayer(nameArg){
   let name = nameArg;
-  let myMoves = [];
-  return { name };
+  let sign = 'O';
+  return { name, sign };
 }
 
 
@@ -20,6 +20,18 @@ const GameBoard = ( () => {
     '#c2': '',
     '#c3': ''
   };
+
+  // let gameboard = {
+  //   '#a1': 'a1',
+  //   '#a2': 'a2',
+  //   '#a3': 'a3',
+  //   '#b1': 'b1',
+  //   '#b2': 'b2',
+  //   '#b3': 'b3',
+  //   '#c1': 'c1',
+  //   '#c2': 'c2',
+  //   '#c3': 'c3'
+  // };
 
   //populate game board with values in gameboard array
   let populateGameBoard = function(){
@@ -48,10 +60,58 @@ const GameBoard = ( () => {
 
 // Gameplay Module
 const Gameplay = ( () => {
-  let gameStarted = false;
-  let player1 = createPlayer("Player 1");
-  let player2 = createPlayer("Player 2");
+  let gameActive = false;
+  let gb = GameBoard.getGameBoard();
+  let player1 = createPlayer("Player 1", "O");
+  let player2 = createPlayer("Player 2", "X");
   let turn = true;
+  let checkWinningSign = function(){
+    // possible win scenarios
+    // a1, a2, a3 is same or a3, b3, c3 is same or a1, b1, c1 is same, or a2, b2, c2 is same, c1, c2, c3 is same
+    // or a1, b2, c3 is same or a3, b2, c1 is same
+    let a1 = gb["#a1"];
+    let a3 = gb["#a3"];
+    let c2 = gb["#c2"];
+    console.log(gb);
+    if( a1 != '' ){
+      if( (a1 === gb["#a2"] && a1 === gb["#a3"]) || (a1 === gb["#b1"] && a1 === gb["#c1"]) || (a1 === gb["#b2"] && a1 === gb["#c3"]) ){
+        return a1;
+      }
+    }
+
+    if( a3 != '' ){
+      if( (a3 === gb["#b3"] && a3 === gb["#c3"]) || (a3 === gb["#b2"] && a3 === gb["#c1"])){
+        return a3;
+      }
+    }
+
+    if( c2 != '' ){
+      if( (c2 === gb["#a2"] && c2 === gb["#b2"]) || (c2 === gb["#c1"] && c2 === gb["#c3"]) ){
+        return c2;
+      }
+    }
+
+    return false;
+
+  }
+
+  const checkWin = function(){
+    const winningSign = checkWinningSign();
+    if(winningSign){
+      gameActive = false;
+      if(winningSign === 'O'){
+        printWinner(player1.name);
+      }else{
+        printWinner(player2.name);
+      }
+    }
+  }
+
+  const printWinner = function(winnerName){
+    const winnerElement = document.querySelector("#winner-text");
+    winnerElement.textContent = `${winnerName} won!`
+  }
+
   let applyEventListeners = function(){
     let startBtn = document.querySelector("#startBtn");
     startBtn.addEventListener('click', ()=> initializeGame() );
@@ -68,15 +128,14 @@ const Gameplay = ( () => {
     player2.name = p2Name;
   }
   let initializeGame = function(){
-    if(!gameStarted){
+    if(!gameActive){
       changePlayersNames();
-      gameStarted = true;
+      gameActive = true;
     }else{
       throw new Error("Game already started.")
     }
   }
   let makeAMove = function(){
-    let gb = GameBoard.getGameBoard();
     console.log('gb: ', gb)
     for(let key in gb){
       let cellQuery = document.querySelector(key);
@@ -85,9 +144,13 @@ const Gameplay = ( () => {
         cellQuery.addEventListener('click', (e)=> {
           if(turn){
             GameBoard.assignValue(key, 'O')
+            let x = checkWinningSign();
+            if(x)console.log(x, ' WINS');
             turn = !turn;
           }else{
             GameBoard.assignValue(key, 'X')
+            let x = checkWinningSign();
+            if(x)console.log(x, ' WINS');
             turn = !turn;
           }
         });
